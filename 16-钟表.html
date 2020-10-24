@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      #can {
+        box-shadow: 0 2px 15px rgba(0, 0, 0, 0.5);
+        border-radius: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1></h1>
+    <canvas id="can" width="1000" height="800">
+      你的浏览器太Low, 请更换新版浏览器~！
+    </canvas>
+    <script>
+      let can = document.getElementById('can');
+      let ctx = can.getContext('2d');
+      draw();
+      setInterval(draw, 1000);
+
+      function draw() {
+        ctx.clearRect(0, 0, can.width, can.height);
+        let date = new Date();
+        let year = date.getFullYear();
+        let month = date.getMonth() + 1;
+        // let month2 = month1 < 10 ? '0' + month1 : month1;
+        let day = date.getDate();
+        // let day2 = day1 < 10 ? '0' + day1 : day1;
+        let h = date.getHours();
+        // let hours2 = hours1 < 10 ? '0' + hours1 : hours1;
+        let m = date.getMinutes();
+        // let minutes2 = minutes1 < 10 ? '0' + minutes1 : minutes1;
+        let s = date.getSeconds();
+        // let seconds2 = seconds1 < 10 ? '0' + seconds1 : seconds1;
+        console.log(h, m, s);
+        ctx.save();
+        ctx.fillStyle = '#2c3e50';
+        ctx.font = '50px 黑体';
+        ctx.beginPath();
+        ctx.fillText(
+          `${year}年 ${month}月 ${day}日 ${h}时 : ${m}分 : ${s}秒`,
+          50,
+          50,
+          900
+        );
+        ctx.restore();
+        // 表盘
+        ctx.save();
+        ctx.beginPath();
+        ctx.arc(500, 400, 200, 0, 2 * Math.PI, false);
+        ctx.strokeStyle = '#2c3e50';
+        ctx.lineWidth = '15';
+        ctx.stroke();
+        ctx.restore();
+        // 时针
+        ctx.save();
+        ctx.lineWidth = '7';
+        ctx.lineCap = 'round';
+        ctx.strokeStyle = '#e74c3c';
+        ctx.translate(500, 400);
+        for (let i = 0; i < 12; i++) {
+          ctx.beginPath();
+          ctx.rotate((30 * Math.PI) / 180);
+          ctx.moveTo(0, 165);
+          ctx.lineTo(0, 185);
+          ctx.stroke();
+        }
+        ctx.restore();
+
+        // 分针刻度
+        ctx.save();
+        ctx.lineWidth = 3;
+        ctx.lineCap = 'round';
+        ctx.strokeStyle = '#2ecc71';
+        ctx.translate(500, 400);
+        for (let i = 0; i <= 60; i++) {
+          if (i % 5 !== 0) {
+            ctx.beginPath();
+            ctx.moveTo(0, 175);
+            ctx.lineTo(0, 185);
+            ctx.stroke();
+          }
+          ctx.rotate((6 * Math.PI) / 180);
+        }
+        ctx.restore();
+
+        // 圆心
+        ctx.save();
+        ctx.beginPath();
+        ctx.arc(500, 400, 10, 0, 2 * Math.PI, false);
+        ctx.fillStyle = '#2c3e50';
+        ctx.fill();
+        ctx.restore();
+
+        // 转动的时针
+        ctx.save();
+        ctx.lineWidth = 6;
+        ctx.strokeStyle = '#e84118';
+        ctx.lineCap = 'round';
+        // ctx.translate(500, 400);
+        // ctx.rotate((h * 30 * Math.PI) / 180);
+        ctx.beginPath();
+        ctx.moveTo(500, 400);
+        ctx.lineTo(500, 470);
+        ctx.stroke();
+        ctx.restore();
+
+        // 分针
+        ctx.save();
+        ctx.lineWidth = 4;
+        ctx.strokeStyle = '#00a8ff';
+        ctx.translate(500, 400);
+        // ctx.rotate((m * 6 * Math.PI) / 180);
+        ctx.beginPath();
+        ctx.rotate((m * 6 * Math.PI) / 180);
+        ctx.moveTo(0, 400);
+        ctx.lineTo(0, 500);
+
+        ctx.stroke();
+        ctx.restore();
+
+        // // 秒针
+        ctx.save();
+        ctx.lineWidth = 2;
+        ctx.strokeStyle = '#f368e0';
+        // ctx.translate(500, 400);
+        // ctx.rotate((s * 6 * Math.PI) / 180);
+        ctx.beginPath();
+        ctx.rotate((m * 6 * Math.PI) / 180);
+        ctx.moveTo(500, 400);
+        ctx.lineTo(500, 530);
+        ctx.stroke();
+        ctx.restore();
+      }
+    </script>
+  </body>
+</html>

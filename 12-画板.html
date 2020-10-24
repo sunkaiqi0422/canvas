@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      #can {
+        box-shadow: 0 2px 15px rgba(0, 0, 0, 0.5);
+        border-radius: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="can" width="1000" height="800">
+      你的浏览器太Low, 请更换新版浏览器~！
+    </canvas>
+    <script>
+      let can = document.getElementById('can');
+      let ctx = can.getContext('2d');
+      // console.log(can.offsetLeft);
+      can.addEventListener('mousedown', a, false);
+      function a(e) {
+        let x = e.clientX;
+        let y = e.clientY;
+        let startX = x - can.offsetLeft;
+        let startY = y - can.offsetTop;
+        ctx.beginPath();
+        ctx.lineJoin = 'round';
+        ctx.moveTo(startX, startY);
+        can.addEventListener('mousemove', b);
+      }
+      function b(e) {
+        // let moveX = e.clientX - can.offsetLeft;
+        // let moveY = e.clientY - can.offsetTop;
+        ctx.lineTo(e.clientX - can.offsetLeft, e.clientY - can.offsetTop);
+        ctx.strokeStyle = '#34495e';
+        ctx.lineWidth = 5;
+        ctx.stroke();
+      }
+      can.addEventListener('mouseup', () => {
+        // can.removeEventListener('mousedown', a, false);
+        can.removeEventListener('mousemove', b, false);
+      });
+    </script>
+  </body>
+</html>

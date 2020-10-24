@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        width: 100vw;
+        height: 100vh;
+        background: url('https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQQHlJW3iX0eSx0YEsPnrToEC7iKW4m3TEgiQ&usqp=CAU')
+          no-repeat;
+        background-size: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="can">你的浏览器太Low, 请更换新版浏览器~！</canvas>
+    <script>
+      let can = document.getElementById('can');
+      let ctx = can.getContext('2d');
+      // 设置换不宽高
+      can.width = document.documentElement.clientWidth;
+      can.height = document.documentElement.clientHeight;
+
+      let image = new Image();
+      image.crossOrigin = '';
+      image.src =
+        'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcR7e9JBYdAGNSUmqhRmFxGjiaWx685geJYxdg&usqp=CAU';
+      image.onload = function () {
+        draw();
+      };
+      function draw() {
+        ctx.drawImage(image, 0, 0, can.width, can.height);
+
+        // 手指按下
+        can.addEventListener('touchstart', e => {
+          e = e || window.event;
+          let touchC = e.changedTouches[0];
+          let startX = touchC.clientX - can.offsetLeft;
+          let startY = touchC.clienY - can.offsetTop;
+          ctx.lineWidth = 50;
+          ctx.lineCap = 'round';
+          ctx.lineJoin = 'round';
+          ctx.globalCompositeOperation = 'destination-out';
+
+          ctx.save();
+          ctx.beginPath();
+          ctx.moveTo(startX, startY);
+          ctx.lineTo(startX + 1, startY + 1);
+          ctx.stroke();
+          ctx.restore();
+        });
+
+        // 手指移动
+        can.addEventListener('touchmove', e => {
+          e = e || window.event;
+          let touchC = e.changedTouches[0];
+          let moveX = touchC.clientX - can.offsetLeft;
+          let moveY = touchC.clientY - can.offsetTop;
+
+          ctx.save();
+          ctx.lineTo(moveX, moveY);
+          ctx.stroke();
+          ctx.restore();
+        });
+
+        // 手指离开
+        can.addEventListener('touchend', () => {
+          // 获取整个画布所有像素
+          let imageData = ctx.getImageData(0, 0, can.width, can.height);
+          console.log(imageData);
+          // 定义变量记录透明像素有多少个
+          let flag = 0;
+          // 获取所有像素点
+          let allPx = imageData.width * imageData.height;
+          for (let i = 0; i < allPx; i++) {
+            // 判断当前像素点是否为透明
+            if (imageData.data[4 * i + 3] === 0) {
+              flag++;
+            }
+          }
+          // 透明像素数量大于总像素的1/2 画板透明度为0
+          if (flag >= allPx / 2) {
+            can.style.opacity = 0;
+            can.style.transition = '1s';
+          }
+        });
+
+        // 画板透明度过度到0时  删除画板
+        can.addEventListener('transitionend', function () {
+          this.remove();
+        });
+      }
+    </script>
+  </body>
+</html>

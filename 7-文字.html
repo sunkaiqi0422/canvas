@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      #can {
+        box-shadow: 0 2px 15px rgba(0, 0, 0, 0.5);
+        border-radius: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="can" width="1000" height="800">
+      你的浏览器太Low, 请更换新版浏览器~！
+    </canvas>
+    <script>
+      let can = document.getElementById('can');
+      let ctx = can.getContext('2d');
+      ctx.beginPath();
+      ctx.strokeStyle = '#bdc3c7';
+      ctx.moveTo(400, 0);
+      ctx.lineTo(400, 800);
+      ctx.moveTo(0, 200);
+      ctx.lineTo(1000, 200);
+      ctx.moveTo(0, 600);
+      ctx.lineTo(1000, 600);
+      ctx.stroke();
+      /* 
+        1. 填充
+            - fillStyle 填充颜色
+            - fillText(字体, X, Y, max-width);  max-width指字体最大宽度
+        2. 描边
+            - strokeStyle 设置描边颜色
+            - strokeText(字体, X, Y, max-width);  max-width指字体最大宽度
+        3.    
+          font 文本样式  大小, 字体样式(sans-serif默认)
+          textAlign 设置文字水平对齐方式 left right center
+          textBaseline  设置文字垂直对齐方式  top middel bottt
+       */
+      ctx.beginPath();
+      ctx.fillStyle = '#78e08f';
+      ctx.font = '100px 宋体';
+      ctx.textAlign = 'right';
+      ctx.textBaseline = 'top';
+      ctx.fillText('孙凯琪', 400, 200, 500);
+
+      ctx.beginPath();
+      ctx.strokeStyle = '#c56cf0';
+      ctx.font = '100px 黑体';
+      ctx.textBaseline = 'bottom';
+      ctx.textAlign = 'left';
+      ctx.strokeText('开怀', 400, 600, 500);
+    </script>
+  </body>
+</html>

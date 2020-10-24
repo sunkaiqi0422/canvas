@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      #can {
+        box-shadow: 0 2px 15px rgba(0, 0, 0, 0.5);
+        border-radius: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1></h1>
+    <canvas id="can" width="1000" height="700">
+      你的浏览器太Low, 请更换新版浏览器~！
+    </canvas>
+    <script>
+      let can = document.getElementById('can');
+      let ctx = can.getContext('2d');
+      let image = new Image();
+      image.src = 'txmxn.jpg';
+      image.addEventListener('load', () => {
+        // 设置画布宽度和高度
+        can.width = image.width * 2;
+        can.height = image.height * 2;
+
+        // 绘制图片
+        ctx.drawImage(image, 0, 0);
+
+        // 获取图片像素数据
+        let oldImageData = ctx.getImageData(0, 0, image.width, image.height);
+        // console.log(imageData);
+
+        // 创建一个新的像素数据(存储已经修改过的像素数据 --> 马赛克)
+        let newImageData = ctx.createImageData(image.width, image.height);
+
+        // 定义一个size为5的大小的模块 (5个像素为一个单位) 把图片分为若干个快
+        let size = 5;
+        // 行的块数
+        for (let r = 0; r < oldImageData.width / size; r++) {
+          // 列的块数
+          for (let c = 0; c < oldImageData.height / size; c++) {
+            // 定义两个随机数  随机获取某个像素点颜色信息
+            let x = Math.floor(Math.random() * size);
+            let y = Math.floor(Math.random() * size);
+
+            // 获取像素
+            let color = getPxColor(oldImageData, r * size + x, c * size + y);
+
+            // 颜色重新绘制到每个像素块中
+            for (let k = 0; k < size; k++) {
+              for (let t = 0; t < size; t++) {
+                setPxColor(newImageData, r * size + k, c * size + k, color);
+              }
+            }
+          }
+        }
+        ctx.putImageData(newImageData, image.width, 0);
+      });
+
+      function getPxColor(imageData, x, y) {
+        let color = [];
+        let w = imageData.width;
+        color[0] = imageData.data[(y * w + x) * 4];
+        color[1] = imageData.data[(y * w + x) * 4 + 1];
+        color[2] = imageData.data[(y * w + x) * 4 + 2];
+        color[3] = imageData.data[(y * w + x) * 4 + 3];
+        return color;
+      }
+
+      function setPxColor(imageData, x, y, color) {
+        let w = imageData.width;
+        imageData.data[(y * w + x) * 4] = color[0];
+        imageData.data[(y * w + x) * 4 + 1] = color[1];
+        imageData.data[(y * w + x) * 4 + 2] = color[2];
+        imageData.data[(y * w + x) * 4 + 3] = color[3];
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      #can {
+        box-shadow: 0 2px 15px rgba(0, 0, 0, 0.5);
+        border-radius: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="can" width="1000" height="800">
+      你的浏览器太Low, 请更换新版浏览器~！
+    </canvas>
+    <script>
+      let can = document.getElementById('can');
+      let ctx = can.getContext('2d');
+
+      /* 
+        线性渐变:
+            createLinearGradient(x1, y1, x2, y2)   接受 4 个参分别表示渐变的起点 (x1,y1) 与终点 (x2,y2)
+        径向渐变:
+            createRadialGradient(x1, y1, r1, x2, y2, r2,...)   接受 6 个参数，前三个定义一个以 (x1,y1) 为原点，半径为 r1 的圆，后三	个参数则定义另一个以 (x2,y2) 为原点，半径为 r2 的圆
+
+            addColorStop(position, color)  方法接受 2 个参数，position 参数必须是一个 0.0 与 1.0 之间的数值，表示渐变中	颜色所在的相对位置
+       */
+      let lg = ctx.createLinearGradient(0, 0, 400, 200);
+      lg.addColorStop(0, '#f1c40f');
+      lg.addColorStop(0.25, '#e67e22');
+      lg.addColorStop(0.5, '#e74c3c');
+      lg.addColorStop(0.75, '#f368e0');
+      lg.addColorStop(1, '#ff6b6b');
+      ctx.beginPath();
+      ctx.fillStyle = lg;
+      ctx.fillRect(100, 100, 400, 200);
+
+      let rg = ctx.createRadialGradient(
+        300,
+        500,
+        40,
+        300,
+        500,
+        140,
+        300,
+        500,
+        150
+      );
+      rg.addColorStop(0, '#ee5253');
+      rg.addColorStop(0.5, '#ff9f43');
+      rg.addColorStop(1, '#f368e0');
+      ctx.beginPath();
+      ctx.fillStyle = rg;
+      ctx.arc(300, 500, 150, 2 * Math.PI, false);
+      ctx.fill();
+    </script>
+  </body>
+</html>

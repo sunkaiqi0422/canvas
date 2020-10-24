@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      #can {
+        box-shadow: 0 2px 15px rgba(0, 0, 0, 0.5);
+        border-radius: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="can" width="1000" height="800">
+      你的浏览器太Low, 请更换新版浏览器~！
+    </canvas>
+    <script>
+      let can = document.getElementById('can');
+      let ctx = can.getContext('2d');
+
+      ctx.beginPath();
+
+      // 1. fillRect(x,y,w,h)
+      ctx.fillStyle = '#9b59b6';
+      ctx.fillRect(20, 20, 300, 200);
+
+      ctx.fillStyle = '#e74c3c';
+      ctx.fillRect(20, 300, 300, 200);
+      ctx.fillStyle = '#3dc1d3';
+      ctx.fillRect(40, 320, 260, 160);
+      ctx.fillStyle = '#f5cd79';
+      ctx.fillRect(60, 340, 220, 120);
+      ctx.fillStyle = '#546de5';
+      ctx.fillRect(80, 360, 180, 80);
+
+      // 2. rect(x,y,w,h)
+      ctx.rect(20, 550, 300, 200);
+      ctx.fillStyle = 'red';
+      ctx.fill();
+
+      // 3. strokeRect(x,y,w,h)  绘制描边矩形(如需 自定义样式 在绘制图形上面定义)
+      ctx.lineWidth = '20';
+      ctx.strokeStyle = '#2ecc71';
+      ctx.strokeRect(400, 20, 300, 200);
+
+      // 4.  clearRect(x,y,w,h)    绘制一个与画板颜色相同的矩形
+      ctx.clearRect(60, 60, 200, 100);
+      ctx.closePath();
+    </script>
+  </body>
+</html>

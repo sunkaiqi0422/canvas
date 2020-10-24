@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      #can {
+        box-shadow: 0 2px 15px rgba(0, 0, 0, 0.5);
+        border-radius: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1></h1>
+    <canvas id="can" width="1000" height="700">
+      你的浏览器太Low, 请更换新版浏览器~！
+    </canvas>
+    <script>
+      let can = document.getElementById('can');
+      let ctx = can.getContext('2d');
+
+      ctx.save();
+      ctx.beginPath();
+      ctx.fillStyle = '#2ecc71';
+      ctx.fillRect(300, 100, 300, 200);
+
+      let imageData = ctx.getImageData(0, 0, can.width, can.height);
+
+      function getPxColor(imageData, x, y) {
+        let color = [];
+        let w = imageData.width;
+        color[0] = imageData.data[(y * w + x) * 4];
+        color[1] = imageData.data[(y * w + x) * 4 + 1];
+        color[2] = imageData.data[(y * w + x) * 4 + 2];
+        color[3] = imageData.data[(y * w + x) * 4 + 3];
+
+        return color;
+      }
+
+      console.log(getPxColor(imageData, 450, 250));
+    </script>
+  </body>
+</html>

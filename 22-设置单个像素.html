@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      #can {
+        box-shadow: 0 2px 15px rgba(0, 0, 0, 0.5);
+        border-radius: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1></h1>
+    <canvas id="can" width="1000" height="700">
+      你的浏览器太Low, 请更换新版浏览器~！
+    </canvas>
+    <script>
+      let can = document.getElementById('can');
+      let ctx = can.getContext('2d');
+
+      ctx.save();
+      ctx.beginPath();
+      ctx.fillStyle = '#2ecc71';
+      ctx.fillRect(300, 100, 300, 200);
+
+      let imageData = ctx.getImageData(0, 0, can.width, can.height);
+
+      function setPxColor(imageData, x, y, color) {
+        let w = imageData.width;
+        imageData.data[(y * w + x) * 4] = color[0];
+        imageData.data[(y * w + x) * 4 + 1] = color[1];
+        imageData.data[(y * w + x) * 4 + 2] = color[2];
+        imageData.data[(y * w + x) * 4 + 3] = color[3];
+        // console.log(imageData, x, y, color);
+      }
+
+      // 单个像素设置
+      setPxColor(imageData, 200, 400, [255, 0, 0, 255]);
+
+      // 一行像素设置
+      for (let i = 0; i < can.width; i++) {
+        setPxColor(imageData, i, 500, [0, 255, 0, 255]);
+      }
+      // 一列像素设置
+      for (let i = 0; i < can.width; i++) {
+        setPxColor(imageData, 100, i, [0, 0, 255, 255]);
+      }
+
+      ctx.putImageData(imageData, 0, 0);
+    </script>
+  </body>
+</html>

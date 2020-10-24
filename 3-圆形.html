@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      #can {
+        box-shadow: 0 2px 15px rgba(0, 0, 0, 0.5);
+        border-radius: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="can" width="1000" height="800">
+      你的浏览器太Low, 请更换新版浏览器~！
+    </canvas>
+    <script>
+      let can = document.getElementById('can');
+      let ctx = can.getContext('2d');
+
+      /* 
+        arc(X, Y, r, 开始角度, 结束角度, false/true)
+        角度的写法：360度 2*Math.PI , 270度 1.5*Math.PI , 180度 1*Math.PI , 90度 0.5*Math.PI ,
+        false 顺时针   true逆时针
+       */
+      ctx.beginPath();
+      ctx.fillStyle = '#9b59b6';
+      ctx.arc(200, 200, 100, 0, 2 * Math.PI, false);
+      ctx.fill();
+      ctx.closePath();
+
+      ctx.beginPath();
+      ctx.strokeStyle = '#f368e0';
+      ctx.lineWidth = '10';
+      ctx.arc(200, 500, 100, 0, 1.5 * Math.PI, false);
+      ctx.stroke();
+      ctx.closePath();
+
+      ctx.beginPath();
+      ctx.strokeStyle = '#ff6b6b';
+      ctx.lineWidth = '5';
+      ctx.arc(700, 300, 200, 0, 2 * Math.PI, false);
+      ctx.moveTo(870, 300);
+      ctx.arc(700, 300, 170, 0, 2 * Math.PI, false);
+      ctx.moveTo(840, 300);
+      ctx.arc(700, 300, 140, 0, 2 * Math.PI, false);
+      ctx.moveTo(810, 300);
+      ctx.arc(700, 300, 110, 0, 2 * Math.PI, false);
+      ctx.moveTo(780, 300);
+      ctx.arc(700, 300, 80, 0, 2 * Math.PI, false);
+      ctx.moveTo(750, 300);
+      ctx.arc(700, 300, 50, 0, 2 * Math.PI, false);
+      ctx.moveTo(720, 300);
+      ctx.arc(700, 300, 20, 0, 2 * Math.PI, false);
+      ctx.stroke();
+    </script>
+  </body>
+</html>

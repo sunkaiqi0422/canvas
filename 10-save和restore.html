@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      #can {
+        box-shadow: 0 2px 15px rgba(0, 0, 0, 0.5);
+        border-radius: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="can" width="1000" height="800">
+      你的浏览器太Low, 请更换新版浏览器~！
+    </canvas>
+    <script>
+      /* 
+        save()  保存状态
+        restore() 调用状态
+       */
+      let can = document.getElementById('can');
+      let ctx = can.getContext('2d');
+
+      ctx.save();
+      ctx.fillStyle = 'red';
+      ctx.save();
+      ctx.fillStyle = 'bule';
+      ctx.fillStyle = 'orange';
+      ctx.save();
+
+      ctx.restore();
+      ctx.restore();
+      ctx.restore();
+      ctx.fillRect(100, 100, 300, 200);
+    </script>
+  </body>
+</html>

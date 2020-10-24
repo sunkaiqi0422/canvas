@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      #can {
+        box-shadow: 0 2px 15px rgba(0, 0, 0, 0.5);
+        border-radius: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1></h1>
+    <canvas id="can" width="1000" height="800">
+      你的浏览器太Low, 请更换新版浏览器~！
+    </canvas>
+    <script>
+      /* 
+        arcTo(x1,y1,x2,y2,r)
+       */
+      let can = document.getElementById('can');
+      let ctx = can.getContext('2d');
+
+      ctx.beginPath();
+      ctx.strokeStyle = '#2ecc71';
+      ctx.lineWidth = '5';
+      ctx.moveTo(100, 100);
+      ctx.arcTo(500, 100, 500, 700, 300);
+      ctx.stroke();
+    </script>
+  </body>
+</html>

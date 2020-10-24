@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      #can {
+        box-shadow: 0 2px 15px rgba(0, 0, 0, 0.5);
+        border-radius: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1></h1>
+    <canvas id="can" width="800" height="600">
+      你的浏览器太Low, 请更换新版浏览器~！
+    </canvas>
+    <script>
+      let can = document.getElementById('can');
+      let ctx = can.getContext('2d');
+
+      // 得到画布像素数据
+      let imageData = ctx.getImageData(0, 0, can.width, can.height);
+      console.log(imageData);
+
+      // 获取每个像素的 rgba值
+      for (let i = 0; i < imageData.data.length; i++) {
+        // console.log(imageData.data[4 * i]);
+        // console.log(imageData.data[4 * i + 1]);
+        // console.log(imageData.data[4 * i + 2]);
+        // console.log(imageData.data[4 * i + 3]);
+        imageData.data[4 * i] = 125;
+        imageData.data[4 * i + 1] = 210;
+        imageData.data[4 * i + 2] = 65;
+        imageData.data[4 * i + 3] = 145;
+      }
+      ctx.putImageData(imageData, 0, 0);
+    </script>
+  </body>
+</html>

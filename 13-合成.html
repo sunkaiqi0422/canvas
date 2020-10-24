@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      #can {
+        box-shadow: 0 2px 15px rgba(0, 0, 0, 0.5);
+        border-radius: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="can" width="1000" height="800">
+      你的浏览器太Low, 请更换新版浏览器~！
+    </canvas>
+    <script>
+      // globalCompositeOperation:
+      // globalCompositeOperation     控制图形组合方式
+      // source-over  默认值  新图覆盖在旧图上
+      // source-atop  只绘制旧图和重叠部分 其他透明
+      // source-in    只绘制新图的重叠部分  其他透明
+      // source-out   只绘制新图 重叠部分和旧图透明
+      // destination-over     默认值旧图覆盖在新图上
+      // destination-atop     只绘制新图和重叠部分 其他透明
+      // destination-in       只绘制旧图和重叠部分  其他透明
+      // destination-out      只绘制旧图 重叠部分和新图透明
+      // lighter  旧图与新图都绘制 重叠部分混色处理
+      // xor  旧图与新图重叠处透明
+      // copy   只绘制新图形 不会只旧图形
+      let can = document.getElementById('can');
+      let ctx = can.getContext('2d');
+
+      ctx.beginPath();
+      ctx.fillStyle = 'red';
+      ctx.rect(200, 200, 300, 300);
+      ctx.fill();
+      ctx.globalCompositeOperation = 'lighter';
+      ctx.beginPath();
+      ctx.fillStyle = 'blue';
+      ctx.rect(400, 200, 300, 300);
+      ctx.fill();
+    </script>
+  </body>
+</html>
